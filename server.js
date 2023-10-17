@@ -60,7 +60,7 @@ app.post('/api/ingressos', async (req, res) => {
 const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
-  console.log(`Servidor Express rodando na porta ${port}`);
+  console.log(`Servidor rodando na porta ${port}`);
 });
 
 
