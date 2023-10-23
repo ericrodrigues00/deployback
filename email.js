@@ -1,5 +1,6 @@
 // emailModule.js
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 // Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({

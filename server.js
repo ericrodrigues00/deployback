@@ -21,8 +21,9 @@ app.get('/api/sendQR', async (req, res) => {
   const subject = 'Emaiuuu';
   const text = 'texto';
   const pdfFileName = 'example.pdf';
-  const pdfFilePath = path.join("C:/Users/mauro/Downloads/mauro sales dias ramos - 644417.pdf");
-
+  const pdfFilePath = path.join("C:/Users/mauro/Downloads/maurosrd - 611252.pdf");
+  
+  
   try {
     const info = await emailModule.sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
     console.log('Email sent successfully:', info);
