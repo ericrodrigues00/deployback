@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(cors()); // Habilita o CORS
 
 
-app.get('/api/sendQR', (req, res) => {
+app.get('/api/sendQR', async (req, res) => {
   const from = "texticketsexchange@gmail.com";
   const to = 'maurosdr@hotmail.com';
   const subject = 'Emaiuuu';
@@ -23,16 +23,14 @@ app.get('/api/sendQR', (req, res) => {
   const pdfFileName = 'example.pdf';
   const pdfFilePath = path.join("C:/Users/mauro/Downloads/mauro sales dias ramos - 644417.pdf");
 
-  // Call sendEmailWithAttachment with a callback function to handle the response
-  emailModule.sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath, (error, info) => {
-    if (error) {
-      console.error('Error sending email:', error);
-      res.status(500).send('Email sending failed');
-    } else {
-      console.log('Email sent successfully:', info);
-      res.send('Email sent successfully');
-    }
-  });
+  try {
+    const info = await emailModule.sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
+    console.log('Email sent successfully:', info);
+    res.send('Email sent successfully');
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).send('Email sending failed');
+  }
 });
 
 // Rota para verificar a validade do ingresso
