@@ -11,14 +11,13 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-function sendEmailWithAttachment(
+async function sendEmailWithAttachment(
     from,
     to,
     subject,
     text,
     pdfFileName,
-    pdfFilePath,
-    callback
+    pdfFilePath
 ) {
   const mailOptions = {
     from,
@@ -34,16 +33,26 @@ function sendEmailWithAttachment(
     ]
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Error sending email: ' + error);
-      callback(error, null);
-    } else {
-      console.log('Email sent: ' + info.response);
-      callback(null, info);
-    }
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        resolve(info);
+      }
+    });
   });
 }
+
+const from = "texticketsexchange@gmail.com";
+const to = 'maurosdr@hotmail.com';
+const subject = 'Emaiuuu';
+const text = 'texto';
+const pdfFileName = 'example.pdf';
+const pdfFilePath = path.join("C:/Users/mauro/Downloads/maurosrd - 611252.pdf");
+sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
+
 
 module.exports = {
   sendEmailWithAttachment
