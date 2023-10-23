@@ -22,10 +22,13 @@ app.get('/api/sendQR', (req, res) => {
   const text = 'texto';
   const pdfFileName = 'example.pdf';
   const pdfFilePath = path.join("C:/Users/mauro/Downloads/mauro sales dias ramos - 644417.pdf");
-
-  emailModule.sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
-
-  res.send('Pika');
+  try {
+    emailModule.sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
+    res.send('Email sent successfully');
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).send('Email sending failed');
+  }
 });
 
 // Rota para verificar a validade do ingresso
