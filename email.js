@@ -16,23 +16,14 @@ function sendEmailWithAttachment(
     from,
     to,
     subject,
-    text,
-    pdfFileName,
-    pdfFilePath
+    text
   ) {
     // Email data
     const mailOptions = {
       from,
       to,
       subject,
-      text,
-      attachments: [
-        {
-          filename: pdfFileName,
-          path: pdfFilePath,
-          contentType: 'application/pdf'
-        }
-      ]
+      text
     };
   
     // Send the email
