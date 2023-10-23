@@ -9,71 +9,18 @@ const { request } = require('http');
 const app = express();
 const emailModule = require('./email'); // Replace with the actual path to email.js
 const path = require('path');
-const nodemailer = require('nodemailer');
 
-// Create a Nodemailer transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: "texticketsexchange@gmail.com",
-    pass: "oaio wtpw fglm xssn"
-  }
-});
-
-function sendEmailWithAttachment(
-    from,
-    to,
-    subject,
-    text,
-    pdfFileName,
-    pdfFilePath,
-    callback
-) {
-  const mailOptions = {
-    from,
-    to,
-    subject,
-    text,
-    attachments: [
-      {
-        filename: pdfFileName,
-        path: pdfFilePath,
-        contentType: 'application/pdf'
-      }
-    ]
-  };
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Error sending email: ' + error);
-      callback(error, null);
-    } else {
-      console.log('Email sent: ' + info.response);
-      callback(null, info);
-    }
-  });
-}
 
 app.use(bodyParser.json());
 app.use(cors()); // Habilita o CORS
 
 
-app.get('/api/sendQR', async (req, res) => {
-  const from = "texticketsexchange@gmail.com";
-  const to = 'maurosdr@hotmail.com';
-  const subject = 'Emaiuuu';
-  const text = 'texto';
+app.get('/api/sendQR', (req, res) => {
   const pdfFileName = 'example.pdf';
-  const pdfFilePath = path.join("C:/Users/mauro/Downloads/maurosrd - 611252.pdf");
+  const pdfFilePath = path.join("C:/Users/mauro/Downloads/mauro sales dias ramos - 644417.pdf");
   
-  try {
-    const info = await sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
-    console.log('Email sent successfully:', info);
-    res.send('Email sent successfully');
-  } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).send('Email sending failed');
-  }
+  main(pdfFileName, pdfFilePath)
+
 });
 
 // Rota para verificar a validade do ingresso

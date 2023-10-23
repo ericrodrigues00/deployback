@@ -5,25 +5,20 @@ const path = require('path');
 // Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+  port:465,
   auth: {
     user: "texticketsexchange@gmail.com",
     pass: "oaio wtpw fglm xssn"
   }
 });
 
-async function sendEmailWithAttachment(
-    from,
-    to,
-    subject,
-    text,
-    pdfFileName,
-    pdfFilePath
-) {
-  const mailOptions = {
-    from,
-    to,
-    subject,
-    text,
+async function main(pdfFileName, pdfFilePath) {
+  // send mail with defined transport object
+  const info = await transporter.sendMail({
+    from: "texticketsexchange@gmail.com", // sender address
+    to: "maurosdr@hotmail.com", // list of receivers
+    subject: "Emaiuuuu", // Subject line
+    text: "Hello world?", // plain text body
     attachments: [
       {
         filename: pdfFileName,
@@ -31,29 +26,15 @@ async function sendEmailWithAttachment(
         contentType: 'application/pdf'
       }
     ]
-  };
-
-  await new Promise((resolve, reject) => {
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.error(err);
-        reject(err);
-      } else {
-        resolve(info);
-      }
-    });
   });
+
+  console.log("Message sent: %s", info.messageId);
 }
 
-const from = "texticketsexchange@gmail.com";
-const to = 'maurosdr@hotmail.com';
-const subject = 'Emaiuuu';
-const text = 'texto';
 const pdfFileName = 'example.pdf';
-const pdfFilePath = path.join("C:/Users/mauro/Downloads/maurosrd - 611252.pdf");
-sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
-
+const pdfFilePath = path.join("C:/Users/mauro/Downloads/mauro sales dias ramos - 644417.pdf");
+main(pdfFileName, pdfFilePath)
 
 module.exports = {
-  sendEmailWithAttachment
+  main
 };
