@@ -20,15 +20,19 @@ app.get('/api/sendQR', (req, res) => {
   const to = 'maurosdr@hotmail.com';
   const subject = 'Emaiuuu';
   const text = 'texto';
-  //const pdfFileName = 'example.pdf';
-  //const pdfFilePath = path.join("C:/Users/mauro/Downloads/mauro sales dias ramos - 644417.pdf");
-  try {
-    emailModule.sendEmailWithAttachment(from, to, subject, text);
-    res.send('Email sent successfully');
-  } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).send('Email sending failed');
-  }
+  const pdfFileName = 'example.pdf';
+  const pdfFilePath = path.join("C:/Users/mauro/Downloads/mauro sales dias ramos - 644417.pdf");
+
+  // Call sendEmailWithAttachment with a callback function to handle the response
+  emailModule.sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(500).send('Email sending failed');
+    } else {
+      console.log('Email sent successfully:', info);
+      res.send('Email sent successfully');
+    }
+  });
 });
 
 // Rota para verificar a validade do ingresso
