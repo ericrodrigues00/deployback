@@ -39,8 +39,10 @@ function sendEmailWithAttachment(
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error('Error sending email: ' + error);
+        res.status(500).json({ error: 'Error sending email' });
       } else {
         console.log('Email sent: ' + info.response);
+        res.send('Pika2');
       }
     });
   }
@@ -49,3 +51,4 @@ function sendEmailWithAttachment(
 module.exports = {
     sendEmailWithAttachment
 };
+

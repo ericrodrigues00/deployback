@@ -16,20 +16,16 @@ app.use(cors()); // Habilita o CORS
 
 
 app.get('/api/sendQR', (req, res) => {
-  const nome = req.query.nome;
-  const numero = req.query.numero;
-
   const from = "texticketsexchange@gmail.com";
-  const to = req.query.contato;
-  const subject = 'Ingressos Parmejó 2023';
-  const text = 'Olá, tudo bem? Seu Ingresso para o PARMEJÓ2023 já está disponível!';
-  const pdfFileName = `${nome} - ${numero}.pdf`;
-
-  const pdfFilePath = path.join(`C:/Users/sammy/Downloads/${nome} - ${numero}.pdf`);
+  const to = 'maurosdr@hotmail.com';
+  const subject = 'Emaiuuu';
+  const text = 'texto';
+  const pdfFileName = 'example.pdf';
+  const pdfFilePath = path.join("C:/Users/mauro/Downloads/mauro sales dias ramos - 644417.pdf");
 
   emailModule.sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
 
-  res.send('Email sent.');
+  res.send('Pika');
 });
 
 // Rota para verificar a validade do ingresso
