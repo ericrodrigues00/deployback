@@ -2,7 +2,7 @@
 const nodemailer = require('nodemailer');
 const path = require('path');
 
-// Create a Nodemailer transporter
+const CreateMailTransporter = () =>{
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   port:465,
@@ -11,9 +11,11 @@ const transporter = nodemailer.createTransport({
     pass: "oaio wtpw fglm xssn"
   }
 });
-
+  return transporter;
+}
 async function main(pdfFileName, pdfFilePath) {
-  // send mail with defined transport object
+  const transporter = CreateMailTransporter();
+  
   const info = await transporter.sendMail({
     from: "texticketsexchange@gmail.com", // sender address
     to: "maurosdr@hotmail.com", // list of receivers
@@ -31,9 +33,6 @@ async function main(pdfFileName, pdfFilePath) {
   console.log("Message sent: %s", info.messageId);
 }
 
-const pdfFileName = 'example.pdf';
-const pdfFilePath = path.join("C:/Users/mauro/Downloads/mauro sales dias ramos - 644417.pdf");
-main(pdfFileName, pdfFilePath)
 
 module.exports = {
   main
