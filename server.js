@@ -19,7 +19,7 @@ app.get('/api/sendQR', (req, res) => {
   const pdfFileName = 'example.pdf';
   const pdfFilePath = path.join("C:/Users/mauro/Downloads/mauro sales dias ramos - 644417.pdf");
   
-  main(pdfFileName, pdfFilePath)
+  emailModule.main(pdfFileName, pdfFilePath)
 
 });
 
