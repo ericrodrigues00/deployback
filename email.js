@@ -1,39 +1,56 @@
-// emailModule.js
 const nodemailer = require('nodemailer');
+const fs = require('fs');
 const path = require('path');
 
-const CreateMailTransporter = () =>{
+// Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  port:465,
+  service: 'gmail', // e.g., 'Gmail', 'Outlook', 'Yahoo', etc.
   auth: {
-    user: "texticketsexchange@gmail.com",
-    pass: "oaio wtpw fglm xssn"
-  }
+    user: "texticketsexchange@gmail.com", // Your email address
+    pass: "oaio wtpw fglm xssn" // Your email password or app-specific password 
+}
 });
-  return transporter;
-}
-async function main(pdfFileName, pdfFilePath) {
-  const transporter = CreateMailTransporter();
+
+// Email data
+function sendEmailWithAttachment(
+    from,
+    to,
+    subject,
+    text,
+    pdfFileName,
+    pdfFilePath
+  ) {
+    // Email data
+    const mailOptions = {
+      from,
+      to,
+      subject,
+      text,
+      attachments: [
+        {
+          filename: pdfFileName,
+          path: pdfFilePath,
+          contentType: 'application/pdf'
+        }
+      ]
+    };
   
-  const info = await transporter.sendMail({
-    from: "texticketsexchange@gmail.com", // sender address
-    to: "maurosdr@hotmail.com", // list of receivers
-    subject: "Emaiuuuu", // Subject line
-    text: "Hello world?", // plain text body
-    attachments: [
-      {
-        filename: pdfFileName,
-        path: pdfFilePath,
-        contentType: 'application/pdf'
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email: ' + error);
+      } else {
+        console.log('Email sent: ' + info.response);
       }
-    ]
-  });
-
-  console.log("Message sent: %s", info.messageId);
-}
-
-
-module.exports = {
-  main
-};
+    });
+  }
+  
+  // Example usage:
+  const from = "texticketsexchange@gmail.com";
+  const to = 'jvinicius2002@gmail.com';
+  const subject = 'Email Subject';
+  const text = 'Email Text';
+  const pdfFileName = 'teste.pdf';
+  const pdfFilePath = path.join("C:/Users/sammy/Downloads/", pdfFileName);
+  
+  sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
